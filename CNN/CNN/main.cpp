@@ -5,14 +5,14 @@
 #include <random>
 #include <time.h>
 #include "cnn.h"
-#include "minst.h"
+#include "Mnist.h"
 
 // the following functions are test functions
-// test Minst module
-void test_minst(){
-	LabelArr testLabel=read_Lable("../Minst/test-labels.idx1-ubyte");
-	ImgArr testImg=read_Img("../Minst/test-images.idx3-ubyte");
-	save_Img(testImg,"../Minst/testImgs/");
+// test Mnist module
+void test_Mnist(){
+	LabelArr testLabel=read_Lable("../Mnist/test-labels.idx1-ubyte");
+	ImgArr testImg=read_Img("../Mnist/test-images.idx3-ubyte");
+	save_Img(testImg,"../Mnist/testImgs/");
 }
 // test Mat module
 void test_mat(){
@@ -107,8 +107,8 @@ void test_mat1()
 void test_cnn()
 {
 
-	LabelArr testLabel=read_Lable("../Minst/train-labels.idx1-ubyte");
-	ImgArr testImg=read_Img("../Minst/train-images.idx3-ubyte");
+	LabelArr testLabel=read_Lable("../Mnist/train-labels.idx1-ubyte");
+	ImgArr testImg=read_Img("../Mnist/train-images.idx3-ubyte");
 
 	nSize inputSize={testImg->ImgPtr[0].c,testImg->ImgPtr[0].r};
 	int outSize=testLabel->LabelPtr[0].l;
@@ -134,10 +134,10 @@ void test_cnn()
 //main function
 int main()
 {
-	LabelArr trainLabel=read_Lable("../Minst/train-labels.idx1-ubyte");
-	ImgArr trainImg=read_Img("../Minst/train-images.idx3-ubyte");
-	LabelArr testLabel=read_Lable("../Minst/test-labels.idx1-ubyte");
-	ImgArr testImg=read_Img("../Minst/test-images.idx3-ubyte");
+	LabelArr trainLabel=read_Lable("../Mnist/train-labels.idx1-ubyte");
+	ImgArr trainImg=read_Img("../Mnist/train-images.idx3-ubyte");
+	LabelArr testLabel=read_Lable("../Mnist/test-labels.idx1-ubyte");
+	ImgArr testImg=read_Img("../Mnist/test-images.idx3-ubyte");
 
 	nSize inputSize={testImg->ImgPtr[0].c,testImg->ImgPtr[0].r};
 	int outSize=testLabel->LabelPtr[0].l;
@@ -154,7 +154,7 @@ int main()
 	int trainNum=55000;
 	cnntrain(cnn,trainImg,trainLabel,opts,trainNum);
 	printf("train finished!!\n");
-	savecnn(cnn,"minst.bin");
+	savecnn(cnn,"Mnist.bin");
 	// save training error
 	FILE  *fp=NULL;
 	fp=fopen("../../Matlab/PicTrans/cnnL.bin","wb");
@@ -166,7 +166,7 @@ int main()
 
 
 	// CNN test
-	importcnn(cnn,"minst.bin");
+	importcnn(cnn,"Mnist.bin");
 	int testNum=10000;
 	float incorrectRatio=0.0;
 	incorrectRatio=cnntest(cnn,testImg,testLabel,testNum);

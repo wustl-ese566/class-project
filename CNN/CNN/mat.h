@@ -14,7 +14,7 @@
 #define valid 2
 
 typedef struct Mat2DSize{
-	int c; // row	
+	int c; // row
 	int r; // column
 }nSize;
 

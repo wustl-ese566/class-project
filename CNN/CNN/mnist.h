@@ -1,5 +1,5 @@
-#ifndef __MINST_
-#define __MINST_
+#ifndef __Mnist_
+#define __Mnist_
 
 
 #include <stdlib.h>
@@ -9,25 +9,25 @@
 #include <random>
 #include <time.h>
 
-typedef struct MinstImg{
+typedef struct MnistImg{
 	int c;           // the weight of image
 	int r;           // the height of image
-	float** ImgData; // dynamic two-dimensional array of image 
-}MinstImg;
+	float** ImgData; // dynamic two-dimensional array of image
+}MnistImg;
 
-typedef struct MinstImgArr{
+typedef struct MnistImgArr{
 	int ImgNum;        // the number of saved image
-	MinstImg* ImgPtr;  // the array pointer of saved image
+	MnistImg* ImgPtr;  // the array pointer of saved image
 }*ImgArr;              // array of saved image data
 
-typedef struct MinstLabel{
+typedef struct MnistLabel{
 	int l;            // the length of output label
 	float* LabelData; // output label data
-}MinstLabel;
+}MnistLabel;
 
-typedef struct MinstLabelArr{
+typedef struct MnistLabelArr{
 	int LabelNum;
-	MinstLabel* LabelPtr;
+	MnistLabel* LabelPtr;
 }*LabelArr;              // save the array of image label
 
 LabelArr read_Lable(const char* filename); // read image label
