@@ -5,14 +5,14 @@
 #include <random>
 #include <time.h>
 #include "cnn.h"
-#include "Mnist.h"
+#include "mnist.h"
 
 // the following functions are test functions
-// test Mnist module
-void test_Mnist(){
-	LabelArr testLabel=read_Lable("../Mnist/test-labels.idx1-ubyte");
-	ImgArr testImg=read_Img("../Mnist/test-images.idx3-ubyte");
-	save_Img(testImg,"../Mnist/testImgs/");
+// test Minst module
+void test_minst(){
+	LabelArr testLabel=read_Lable("../Minst/test-labels.idx1-ubyte");
+	ImgArr testImg=read_Img("../Minst/test-images.idx3-ubyte");
+	save_Img(testImg,"../Minst/8bitimage/");
 }
 // test Mat module
 void test_mat(){
@@ -107,8 +107,8 @@ void test_mat1()
 void test_cnn()
 {
 
-	LabelArr testLabel=read_Lable("../Mnist/train-labels.idx1-ubyte");
-	ImgArr testImg=read_Img("../Mnist/train-images.idx3-ubyte");
+	LabelArr testLabel=read_Lable("../Minst/train-labels.idx1-ubyte");
+	ImgArr testImg=read_Img("../Minst/train-images.idx3-ubyte");
 
 	nSize inputSize={testImg->ImgPtr[0].c,testImg->ImgPtr[0].r};
 	int outSize=testLabel->LabelPtr[0].l;
@@ -134,10 +134,10 @@ void test_cnn()
 //main function
 int main()
 {
-	LabelArr trainLabel=read_Lable("../Mnist/train-labels.idx1-ubyte");
-	ImgArr trainImg=read_Img("../Mnist/train-images.idx3-ubyte");
-	LabelArr testLabel=read_Lable("../Mnist/test-labels.idx1-ubyte");
-	ImgArr testImg=read_Img("../Mnist/test-images.idx3-ubyte");
+	LabelArr trainLabel=read_Lable("../Minst/train-labels.idx1-ubyte");
+	ImgArr trainImg=read_Img("../Minst/train-images.idx3-ubyte");
+	LabelArr testLabel=read_Lable("../Minst/test-labels.idx1-ubyte");
+	ImgArr testImg=read_Img("../Minst/test-images.idx3-ubyte");
 
 	nSize inputSize={testImg->ImgPtr[0].c,testImg->ImgPtr[0].r};
 	int outSize=testLabel->LabelPtr[0].l;
@@ -146,15 +146,18 @@ int main()
 	CNN* cnn=(CNN*)malloc(sizeof(CNN));
 	cnnsetup(cnn,inputSize,outSize);
 
+	// image transfer
+	//test_minst();
+
 	// CNN training
-	/*
+/*
 	CNNOpts opts;
 	opts.numepochs=1;
 	opts.alpha=1.0;
 	int trainNum=55000;
 	cnntrain(cnn,trainImg,trainLabel,opts,trainNum);
 	printf("train finished!!\n");
-	savecnn(cnn,"Mnist.bin");
+	savecnn(cnn,"mnist.bin");
 	// save training error
 	FILE  *fp=NULL;
 	fp=fopen("../../Matlab/PicTrans/cnnL.bin","wb");
@@ -162,15 +165,16 @@ int main()
 		printf("write file failed\n");
 	fwrite(cnn->L,sizeof(float),trainNum,fp);
 	fclose(fp);
-	*/
+*/
 
 
 	// CNN test
-	importcnn(cnn,"Mnist.bin");
+	importcnn(cnn,"weight.dat");
 	int testNum=10000;
 	float incorrectRatio=0.0;
 	incorrectRatio=cnntest(cnn,testImg,testLabel,testNum);
 	printf("test finished!!\n");
+	printf("correct rate: %f\n",incorrectRatio);
 
 	return 0;
 }

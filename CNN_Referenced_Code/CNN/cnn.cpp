@@ -177,12 +177,41 @@ float cnntest(CNN* cnn, ImgArr inputData,LabelArr outputData,int testNum)
 {
 	int n=0;
 	int incorrectnum=0;  //the number of wrong prediction
+	char* filenametest;
+/*
+
 	for(n=0;n<testNum;n++){
 		cnnff(cnn,inputData->ImgPtr[n].ImgData);
 		if(vecmaxIndex(cnn->O5->y,cnn->O5->outputNum)!=vecmaxIndex(outputData->LabelPtr[n].LabelData,cnn->O5->outputNum))
 			incorrectnum++;
 		cnnclear(cnn);
 	}
+*/
+
+	FILE  *fp=NULL;
+	filenametest="test.dat";
+	fp=fopen(filenametest,"w");
+	fprintf(fp,"name_order    predict    inputdata    correct/wrong\n");
+	
+	for(n=0;n<testNum;n++){
+		cnnff(cnn,inputData->ImgPtr[n].ImgData);
+		if(vecmaxIndex(cnn->O5->y,cnn->O5->outputNum)!=vecmaxIndex(outputData->LabelPtr[n].LabelData,cnn->O5->outputNum))
+		{
+			fprintf(fp, "    %d            %d         %d            wrong\n", n+1,vecmaxIndex(cnn->O5->y,cnn->O5->outputNum),vecmaxIndex(outputData->LabelPtr[n].LabelData,cnn->O5->outputNum));
+		
+			
+			incorrectnum++;
+		}
+		else
+		{
+			fprintf(fp, "    %d            %d         %d            correct\n", n+1,vecmaxIndex(cnn->O5->y,cnn->O5->outputNum),vecmaxIndex(outputData->LabelPtr[n].LabelData,cnn->O5->outputNum));
+		}
+			
+		cnnclear(cnn);
+	}
+	fclose(fp);
+
+
 	return (float)incorrectnum/(float)testNum;
 }
 
@@ -274,8 +303,8 @@ void cnntrain(CNN* cnn,	ImgArr inputData,LabelArr outputData,CNNOpts opts,int tr
 			cnnbp(cnn,outputData->LabelPtr[n].LabelData); // back propagation, used for computing the gradient error of each neural�
 
 
-			char* filedir="../../Matlab/PicTrans/CNNData";
-			const char* filename=combine_strings(filedir,combine_strings(intTochar(n),".bin"));
+			char* filedir="../../Matlab/PicTrans/CNNData/";
+			const char* filename=combine_strings(filedir,combine_strings(intTochar(n),".cnn"));
 			savecnndata(cnn,filename,inputData->ImgPtr[n].ImgData);
 			cnnapplygrads(cnn,opts,inputData->ImgPtr[n].ImgData); // updata weight
 

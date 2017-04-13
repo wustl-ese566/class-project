@@ -106,7 +106,7 @@ float** cov(float** map,nSize mapSize,float** inputData,nSize inSize,int type) /
 
 // Up-sampling(equivalent interpolation), upc and upr is interpolation times
 float** UpSample(float** mat,nSize matSize,int upc,int upr)
-{
+{ 
 	int i,j,m,n;
 	int c=matSize.c;
 	int r=matSize.r;
@@ -157,7 +157,7 @@ float** matEdgeShrink(float** mat,nSize matSize,int shrinkc,int shrinkr)
 	for(i=0;i<(r-2*shrinkr);i++)
 		res[i]=(float*)malloc((c-2*shrinkc)*sizeof(float));
 
-
+	
 	for(j=0;j<r;j++){
 		for(i=0;i<c;i++){
 			if(j>=shrinkr&&i>=shrinkc&&j<(r-shrinkr)&&i<(c-shrinkc))

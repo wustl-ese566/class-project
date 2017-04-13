@@ -15,7 +15,7 @@ end
 fclose(fff);
 
 %%%{
-filename='weight.dat';
+filename='weight_16_fixed_point_(S3.12).dat';
 fff=fopen(filename,'w');
 
 %% transfer floating point weight matrix to 16-bit fixed point matrix
@@ -46,12 +46,6 @@ end
 
 %%%}
 fclose(fff);
-
-fl=fopen('0.gray', 'r');
-gray=fread(fl,[28 28],'float');
-fclose(fl);
-
-
 figure(1);
 plot(ldata);
 

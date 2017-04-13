@@ -8,7 +8,7 @@
 #include <random>
 #include <time.h>
 #include "mat.h"
-#include "Mnist.h"
+#include "mnist.h"
 
 #define AvePool 0
 #define MaxPool 1
@@ -26,11 +26,11 @@ typedef struct convolutional_layer{
 	// the weight distribution of feasure map, this is a four-dimensional array
 	// the size equals to inChannels*outChannels*mapSize*mapSize
 	// the four-dimensional array are used to represented the fully associative way. actually, the convolutional layer does not use fully associative way
-
+	
 	float**** mapData;     //the data saved in feasure map
 	float**** dmapData;    //the local gradient of data saved in feasure map
 
-	float* basicData;   //bias
+	float* basicData;   //bias 
 	bool isFullConnect; //fully associative or not
 	bool* connectModel; //connect type (default: fully associative)
 
@@ -92,15 +92,15 @@ typedef struct train_opts{
 }CNNOpts;
 
 void cnnsetup(CNN* cnn,nSize inputSize,int outputSize);
-/*
+/*	
 	training function of CNN
-	inputData, outputData saves the training data
+	inputData, outputData saves the training data	
 	dataNum indicates the number of data
 */
 void cnntrain(CNN* cnn,	ImgArr inputData,LabelArr outputData,CNNOpts opts,int trainNum);
-// test CNN function
+// test CNN function			
 float cnntest(CNN* cnn, ImgArr inputData,LabelArr outputData,int testNum);
-// save CNN
+// save CNN	
 void savecnn(CNN* cnn, const char* filename);
 // import the data of CNN
 void importcnn(CNN* cnn, const char* filename);
@@ -117,8 +117,8 @@ OutLayer* initOutLayer(int inputNum,int outputNum);
 // activation function input is data, inputNum indicates the number of data, bas is bias
 float activation_Sigma(float input,float bas); // sigmoid activation function
 
-void cnnff(CNN* cnn,float** inputData); // forward propagation CNN
-void cnnbp(CNN* cnn,float* outputData); // back propagation CNN
+void cnnff(CNN* cnn,float** inputData); // forward propagation CNN 	
+void cnnbp(CNN* cnn,float* outputData); // back propagation CNN 
 void cnnapplygrads(CNN* cnn,CNNOpts opts,float** inputData);
 void cnnclear(CNN* cnn); // reset v,y,d
 
@@ -130,7 +130,7 @@ void cnnclear(CNN* cnn); // reset v,y,d
 */
 void avgPooling(float** output,nSize outputSize,float** input,nSize inputSize,int mapSize); // get average
 
-/*
+/* 
 	processing of single layer fully associative neural network
 	nnSize: the size of network
 */
