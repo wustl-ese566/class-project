@@ -1,12 +1,22 @@
 
 %% plot error rate or weight dataset
-fl=fopen('Mnist.bin', 'r');
+fl=fopen('mnist.bin', 'r');
 %{
 fl=fopen('cnnL.ma', 'r');
 %}
 ldata=fread(fl,'float');
+fclose(fl);
+
 filename='ldata.dat';
-fff=fopen(filename,'wb');
+fff=fopen(filename,'w');
+for i=1:1:3898
+fprintf(fff,'%g\n',ldata(i));
+end
+fclose(fff);
+
+%%%{
+filename='weight.dat';
+fff=fopen(filename,'w');
 
 %% transfer floating point weight matrix to 16-bit fixed point matrix
 for i=1:1:3898
@@ -30,11 +40,12 @@ for i=1:1:3898
     inputimg_bin=str2num(inputimg_str);
 
   
+    %fprintf(fff,'%s\n',inputimg_str);
     fwrite(fff,inputimg_bin);
 end
+
+%%%}
 fclose(fff);
-
-
 
 fl=fopen('0.gray', 'r');
 gray=fread(fl,[28 28],'float');
@@ -44,7 +55,7 @@ fclose(fl);
 figure(1);
 plot(ldata);
 
-index=1;
+index=54999;
 filename=[num2str(index) '.cnn'];
 fsrc=fopen(filename,'r');
 indata=fread(fsrc,[28 28],'float'); % input
@@ -52,12 +63,28 @@ indata=fread(fsrc,[28 28],'float'); % input
 %% C1
 wC1=[];
 for k=1:6
-    wdata=fread(fsrc,[5 5],'float'); % weight template
+    wdata=fread(fsrc,[5 5], 'float'); % weight template
     wC1=[wC1 wdata];
 end
+
+filename='wC1.dat';
+fff=fopen(filename,'w');
+for i=1:1:300
+fprintf(fff,'%g\n',wC1);
+end
+
+
+
 figure(5);
 imshow(wC1);  % convelutional kernel
 bC1=fread(fsrc,[6 1],'float');
+
+filename='bC1.dat';
+fff=fopen(filename,'w');
+for i=1:1:6
+fprintf(fff,'%g\n',bC1);
+end
+
 
 vdyC1=[];
 for k=1:6
@@ -88,9 +115,23 @@ for k=1:6
     end
     wC3=[wC3; wC3c];
 end
+
+filename='wC3.dat';
+fff=fopen(filename,'w');
+for i=1:1:1800
+fprintf(fff,'%g\n',wC3);
+end
+
 figure(3);
 imshow(wC3);  % convolutional kernel
 bC3=fread(fsrc,[12 1],'float');
+
+filename='bC3.dat';
+fff=fopen(filename,'w');
+for i=1:1:12
+fprintf(fff,'%g\n',bC3);
+end
+
 
 vdyC3=[];
 for k=1:12
@@ -117,7 +158,17 @@ O5v=fread(fsrc,[10 1],'float');
 O5d=fread(fsrc,[10 1],'float');
 O5y=fread(fsrc,[10 1],'float');
 
+filename='O5w.dat';
+fff=fopen(filename,'w');
+for i=1:1:1920
+fprintf(fff,'%g\n',O5w);
+end
 
+filename='O5b.dat';
+fff=fopen(filename,'w');
+for i=1:1:10
+fprintf(fff,'%g\n',O5b);
+end
 
 
     
