@@ -174,7 +174,7 @@ int main()
 	float incorrectRatio=0.0;
 	incorrectRatio=cnntest(cnn,testImg,testLabel,testNum);
 	printf("test finished!!\n");
-	printf("correct rate: %f\n",incorrectRatio);
+	printf("incorrect rate: %f\n",incorrectRatio);
 
 	return 0;
 }
