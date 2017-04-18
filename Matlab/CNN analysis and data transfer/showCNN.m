@@ -6,46 +6,6 @@ fl=fopen('cnnL.ma', 'r');
 %}
 ldata=fread(fl,'float');
 fclose(fl);
-
-filename='ldata.dat';
-fff=fopen(filename,'w');
-for i=1:1:3898
-fprintf(fff,'%g\n',ldata(i));
-end
-fclose(fff);
-
-%%%{
-filename='weight_16_fixed_point_(S3.12).dat';
-fff=fopen(filename,'w');
-
-%% transfer floating point weight matrix to 16-bit fixed point matrix
-for i=1:1:3898
-    if(sign(ldata(i))==0 | sign(ldata(i))==1)
-        signpart(i)=0;
-    else
-        signpart(i)=1;
-    end
-    signpart_str=num2str(signpart(i));
- 
-    integerpart(i)=abs(ldata(i));
-    integerpart(i)=fix(integerpart(i));
-    fractionalpart(i)=abs(ldata(i))-integerpart(i);
-    fractionalpart(i)=fractionalpart(i)*1000;
-    fractionalpart(i)=round(fractionalpart(i));
-    fractionalpart_bin=dec2bin(fractionalpart(i),12);
-    fractionalpart_str=num2str(fractionalpart_bin);
-    integerpart_bin=dec2bin(integerpart(i),3);
-    integerpart_str=num2str(integerpart_bin);
-    inputimg_str=[signpart_str,integerpart_str,fractionalpart_str];
-    inputimg_bin=str2num(inputimg_str);
-
-  
-    %fprintf(fff,'%s\n',inputimg_str);
-    fwrite(fff,inputimg_bin);
-end
-
-%%%}
-fclose(fff);
 figure(1);
 plot(ldata);
 
