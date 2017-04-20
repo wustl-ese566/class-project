@@ -3,7 +3,7 @@ class project C/C++ referenced code
 
 update file description:
 
-./CNN_Accelerator/weight_16_bit_fixed_point(S3.12).dat  //This weight_16_fixed_point(S.12).dat file is packaged weight dataset, containing C1 6*5*5 weight data, 6 bias data, C3 6*12*5*5 weight data, 12 bias data, O5 10*192 weight data, and 10 bias data. 
+./CNN_Accelerator/weight_16_bit_fixed_point(S3.12).dat  //This weight_16_fixed_point(S.12).dat file is packaged weight dataset, containing C1 6‘*’5‘*’5 weight data, 6 bias data, C3 6*12*5*5 weight data, 12 bias data, O5 10*192 weight data, and 10 bias data. 
 
 ./CNN_Accelerator/weight_16_bit_fixed_point(S3.12).dat //This 16-bit fixed point weight dataset .mat format. You can use it to debug with Matlab easily.
 
