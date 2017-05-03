@@ -1,6 +1,6 @@
 clear all;
 %% read data for each image
-
+ i=1:1:9999
     str1='./testImgs/';
     str2=num2str(i);
     str3='.gray';
@@ -10,17 +10,18 @@ clear all;
     fclose(fsrc);  
    
     %% transfer each data in each image to S3.12 16-bit fixed point format
-    str1='./16-bitimgtest(ASCII)/';
+    str1='./16-fixed-point-input-image/';
     str3='.dat';
     filename=[str1,str2,str3];
     fff=fopen(filename,'wb');
     
-    
-       
      a=quantizer([16 12]);
-     a=num2bin(a,ldata);
+     all=num2str(a,ldata);
+     at=num2int(a,ldata);
+     fwrite(fff,at,'integer*2');
      %a=num2str(a);
-     fwrite(fff,a);
+
      fclose(fff);
     
-    
+end  
+
