@@ -1,6 +1,7 @@
 clear all;
 %% read data for each image
- i=1:1:9999
+
+for i=1:1:9999
     str1='./testImgs/';
     str2=num2str(i);
     str3='.gray';
